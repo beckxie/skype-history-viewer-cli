@@ -1,0 +1,40 @@
+name: Test
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ main ]
+
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        go-version: ['1.21', '1.22']
+    
+    steps:
+    - uses: actions/checkout@v4
+    
+    - name: Set up Go
+      uses: actions/setup-go@v5
+      with:
+        go-version: ${{ matrix.go-version }}
+    
+    - name: Build
+      run: go build -v ./...
+    
+    - name: Test
+      run: go test -v ./...
+    
+    - name: Vet
+      run: go vet ./...
+    
+    - name: Format Check
+      run: |
+        fmt=$(go fmt ./...)
+        if [ -n "$fmt" ]; then
+          echo "Please run 'go fmt' to format your code:"
+          echo "$fmt"
+          exit 1
+        fi
