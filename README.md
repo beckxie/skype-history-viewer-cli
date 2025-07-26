@@ -2,6 +2,8 @@
 
 A command-line tool to view and search Skype chat history from exported JSON files.
 
+**English** | [繁體中文](README.zh-TW.md)
+
 ## Features
 
 - 📱 **Command Line Interface**: Easy-to-use CLI with subcommands
