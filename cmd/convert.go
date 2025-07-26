@@ -7,7 +7,7 @@ import (
 	"path/filepath"
 	"strings"
 
-	"github.com/beckxie/SkypeHistoryViewer-go/pkg/models"
+	"github.com/beckxie/skype-history-viewer-cli/pkg/models"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )

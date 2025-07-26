@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"time"
 
-	"github.com/beckxie/SkypeHistoryViewer-go/pkg/search"
-	"github.com/beckxie/SkypeHistoryViewer-go/pkg/utils"
-	"github.com/beckxie/SkypeHistoryViewer-go/pkg/viewer"
+	"github.com/beckxie/skype-history-viewer-cli/pkg/search"
+	"github.com/beckxie/skype-history-viewer-cli/pkg/utils"
+	"github.com/beckxie/skype-history-viewer-cli/pkg/viewer"
 	"github.com/spf13/cobra"
 )
 

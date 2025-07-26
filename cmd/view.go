@@ -8,9 +8,9 @@ import (
 	"strings"
 	"time"
 
-	"github.com/beckxie/SkypeHistoryViewer-go/pkg/models"
-	"github.com/beckxie/SkypeHistoryViewer-go/pkg/utils"
-	"github.com/beckxie/SkypeHistoryViewer-go/pkg/viewer"
+	"github.com/beckxie/skype-history-viewer-cli/pkg/models"
+	"github.com/beckxie/skype-history-viewer-cli/pkg/utils"
+	"github.com/beckxie/skype-history-viewer-cli/pkg/viewer"
 	"github.com/fatih/color"
 	"github.com/spf13/cobra"
 )

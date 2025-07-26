@@ -1,4 +1,4 @@
-# SkypeHistoryViewer-go
+# skype-history-viewer-cli
 
 A command-line tool to view and search Skype chat history from exported JSON files.
 
@@ -17,15 +17,15 @@ A command-line tool to view and search Skype chat history from exported JSON fil
 ### From Source
 
 ```bash
-git clone https://github.com/beckxie/SkypeHistoryViewer-go.git
-cd SkypeHistoryViewer-go
+git clone https://github.com/beckxie/skype-history-viewer-cli.git
+cd skype-history-viewer-cli
 go build -o skype-viewer
 ```
 
 ### Using Go Install
 
 ```bash
-go install github.com/beckxie/SkypeHistoryViewer-go@latest
+go install github.com/beckxie/skype-history-viewer-cli@latest
 ```
 
 ## Usage
@@ -106,6 +106,14 @@ Flags:
 ```bash
 skype-viewer stats -f messages.json
 ```
+
+#### `convert` - Convert old export format
+
+```bash
+skype-viewer convert [old-export-file]
+```
+
+Converts JSON files exported with the old format to the new format that can be read by all commands.
 
 ### Global Flags
 

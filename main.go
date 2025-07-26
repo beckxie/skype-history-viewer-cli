@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"os"
 
-	"github.com/beckxie/SkypeHistoryViewer-go/cmd"
+	"github.com/beckxie/skype-history-viewer-cli/cmd"
 )
 
 func main() {

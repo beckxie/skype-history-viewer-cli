@@ -1,4 +1,4 @@
-module github.com/beckxie/SkypeHistoryViewer-go
+module github.com/beckxie/skype-history-viewer-cli
 
 go 1.21
 
