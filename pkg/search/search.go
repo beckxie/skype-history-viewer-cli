@@ -1,6 +1,7 @@
 package search
 
 import (
+	"context"
 	"fmt"
 	"strings"
 	"sync"
@@ -41,13 +42,13 @@ type SearchOptions struct {
 }
 
 // Search performs a search across all conversations
-func (sm *SearchManager) Search(options SearchOptions) []viewer.SearchResult {
+func (sm *SearchManager) Search(ctx context.Context, options SearchOptions) ([]viewer.SearchResult, error) {
 	// Check cache
 	cacheKey := sm.buildCacheKey(options)
 	sm.cacheMutex.RLock()
 	if cached, ok := sm.searchCache[cacheKey]; ok {
 		sm.cacheMutex.RUnlock()
-		return cached
+		return cached, nil
 	}
 	sm.cacheMutex.RUnlock()
 
@@ -63,7 +64,7 @@ func (sm *SearchManager) Search(options SearchOptions) []viewer.SearchResult {
 
 	// Progress indicator
 	progressChan := make(chan float64)
-	go sm.showProgress(progressChan, totalMessages)
+	go sm.showProgress(ctx, progressChan, totalMessages)
 
 	// Search through conversations
 	for _, conv := range sm.history.Conversations {
@@ -72,7 +73,14 @@ func (sm *SearchManager) Search(options SearchOptions) []viewer.SearchResult {
 			convName := conv.GetConversationDisplayName()
 			if !strings.Contains(strings.ToLower(convName), strings.ToLower(options.ConversationFilter)) {
 				searchedMessages += len(conv.MessageList)
-				progressChan <- float64(searchedMessages)
+
+				select {
+				case <-ctx.Done():
+					close(progressChan)
+					return results, ctx.Err()
+				case progressChan <- float64(searchedMessages):
+				default:
+				}
 				continue
 			}
 		}
@@ -80,7 +88,14 @@ func (sm *SearchManager) Search(options SearchOptions) []viewer.SearchResult {
 		// Search in messages
 		for _, msg := range conv.MessageList {
 			searchedMessages++
-			progressChan <- float64(searchedMessages)
+
+			select {
+			case <-ctx.Done():
+				close(progressChan)
+				return results, ctx.Err()
+			case progressChan <- float64(searchedMessages):
+			default:
+			}
 
 			// Skip system messages
 			if msg.IsSystemMessage() {
@@ -112,7 +127,7 @@ func (sm *SearchManager) Search(options SearchOptions) []viewer.SearchResult {
 				if options.Limit > 0 && len(results) >= options.Limit {
 					close(progressChan)
 					sm.cacheResults(cacheKey, results)
-					return results
+					return results, nil
 				}
 			}
 		}
@@ -123,7 +138,7 @@ func (sm *SearchManager) Search(options SearchOptions) []viewer.SearchResult {
 	// Cache results
 	sm.cacheResults(cacheKey, results)
 
-	return results
+	return results, nil
 }
 
 // checkMatch checks if a message matches search criteria
@@ -259,29 +274,39 @@ func (sm *SearchManager) cacheResults(key string, results []viewer.SearchResult)
 }
 
 // showProgress displays search progress
-func (sm *SearchManager) showProgress(progressChan <-chan float64, total int) {
+func (sm *SearchManager) showProgress(ctx context.Context, progressChan <-chan float64, total int) {
 	startTime := time.Now()
 	lastUpdate := time.Now()
 
-	for progress := range progressChan {
-		// Update every 100ms
-		if time.Since(lastUpdate) < 100*time.Millisecond {
-			continue
+	for {
+		select {
+		case <-ctx.Done():
+			// Clear progress line on cancellation
+			fmt.Printf("\r%s\r", strings.Repeat(" ", 80))
+			return
+		case progress, ok := <-progressChan:
+			if !ok {
+				// Channel closed, clear line and return
+				fmt.Printf("\r%s\r", strings.Repeat(" ", 80))
+				return
+			}
+
+			// Update every 100ms
+			if time.Since(lastUpdate) < 100*time.Millisecond {
+				continue
+			}
+
+			percentage := (progress / float64(total)) * 100
+			elapsed := time.Since(startTime)
+
+			// Clear line and show progress
+			fmt.Printf("\r")
+			color.New(color.FgYellow).Printf("Searching... %.1f%% (%d/%d messages) - %.1fs",
+				percentage, int(progress), total, elapsed.Seconds())
+
+			lastUpdate = time.Now()
 		}
-
-		percentage := (progress / float64(total)) * 100
-		elapsed := time.Since(startTime)
-
-		// Clear line and show progress
-		fmt.Printf("\r")
-		color.New(color.FgYellow).Printf("Searching... %.1f%% (%d/%d messages) - %.1fs",
-			percentage, int(progress), total, elapsed.Seconds())
-
-		lastUpdate = time.Now()
 	}
-
-	// Clear progress line
-	fmt.Printf("\r%s\r", strings.Repeat(" ", 80))
 }
 
 // ClearCache clears the search cache

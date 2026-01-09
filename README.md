@@ -2,6 +2,13 @@
 
 A command-line tool to view and search Skype chat history from exported JSON files.
 
+[![Test Status](https://github.com/beckxie/skype-history-viewer-cli/actions/workflows/test.yml/badge.svg)](https://github.com/beckxie/skype-history-viewer-cli/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/beckxie/skype-history-viewer-cli/branch/main/graph/badge.svg?token=YOUR_TOKEN_HERE)](https://codecov.io/gh/beckxie/skype-history-viewer-cli)
+[![Go Report Card](https://goreportcard.com/badge/github.com/beckxie/skype-history-viewer-cli)](https://goreportcard.com/report/github.com/beckxie/skype-history-viewer-cli)
+[![Go Reference](https://pkg.go.dev/badge/github.com/beckxie/skype-history-viewer-cli.svg)](https://pkg.go.dev/github.com/beckxie/skype-history-viewer-cli)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/beckxie/skype-history-viewer-cli)](https://github.com/beckxie/skype-history-viewer-cli/blob/main/go.mod)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 **English** | [繁體中文](README.zh-TW.md)
 
 ## Features
