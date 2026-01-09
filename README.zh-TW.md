@@ -2,6 +2,12 @@
 
 一個用於查看和搜尋 Skype 聊天記錄的命令列工具，支援從匯出的 JSON 檔案讀取。
 
+[![Test Status](https://github.com/beckxie/skype-history-viewer-cli/actions/workflows/test.yml/badge.svg)](https://github.com/beckxie/skype-history-viewer-cli/actions/workflows/test.yml)
+[![codecov](https://codecov.io/gh/beckxie/skype-history-viewer-cli/graph/badge.svg?token=...)](https://codecov.io/gh/beckxie/skype-history-viewer-cli)
+[![Go Report Card](https://goreportcard.com/badge/github.com/beckxie/skype-history-viewer-cli)](https://goreportcard.com/report/github.com/beckxie/skype-history-viewer-cli)
+[![Go Version](https://img.shields.io/github/go-mod/go-version/beckxie/skype-history-viewer-cli)](https://github.com/beckxie/skype-history-viewer-cli/blob/main/go.mod)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+
 [English](README.md) | **繁體中文**
 
 ## 功能特色

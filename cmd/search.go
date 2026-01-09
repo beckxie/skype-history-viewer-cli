@@ -76,7 +76,10 @@ var searchCmd = &cobra.Command{
 		}
 
 		// Perform search
-		results := searchManager.Search(searchOptions)
+		results, err := searchManager.Search(cmd.Context(), searchOptions)
+		if err != nil && err != cmd.Context().Err() {
+			return fmt.Errorf("search failed: %w", err)
+		}
 
 		// Create viewer and display results
 		viewerOptions := viewer.ViewerOptions{
