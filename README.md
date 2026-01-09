@@ -178,7 +178,7 @@ skype-viewer view -f messages.json
 
 ## Requirements
 
-- Go 1.21 or later
+- Go 1.25.5 or later
 - Terminal with color support (for best experience)
 
 ## License
