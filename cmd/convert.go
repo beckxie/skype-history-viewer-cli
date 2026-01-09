@@ -35,8 +35,8 @@ to the new format (with 'conversations' array) that can be read by all commands.
 
 		// Try to parse as old format
 		var oldFormat struct {
-			ExportDate   string                     `json:"exportDate"`
-			Conversation models.SkypeConversation   `json:"conversation"`
+			ExportDate   string                   `json:"exportDate"`
+			Conversation models.SkypeConversation `json:"conversation"`
 		}
 
 		if err := json.Unmarshal(data, &oldFormat); err != nil {
@@ -58,7 +58,7 @@ to the new format (with 'conversations' array) that can be read by all commands.
 
 		// Generate output filename
 		outputFile := strings.TrimSuffix(inputFile, filepath.Ext(inputFile)) + "_converted.json"
-		
+
 		// Marshal to JSON
 		outputData, err := json.MarshalIndent(newFormat, "", "  ")
 		if err != nil {

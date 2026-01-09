@@ -47,11 +47,11 @@ func checkJSONPath() error {
 	if jsonPath == "" {
 		return fmt.Errorf("please provide a JSON file path using -f or --file flag")
 	}
-	
+
 	// Check if file exists
 	if _, err := os.Stat(jsonPath); os.IsNotExist(err) {
 		return fmt.Errorf("file or directory not found: %s", jsonPath)
 	}
-	
+
 	return nil
 }

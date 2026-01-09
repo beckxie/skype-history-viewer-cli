@@ -15,8 +15,7 @@
 go.work
 
 # Binary
-skype-viewer
-SkypeHistoryViewer-go
+bin/
 
 # IDE
 .idea/
@@ -31,6 +30,7 @@ Thumbs.db
 
 # Test data
 *.json
+!testdata/**
 !go.mod
 !go.sum
 
