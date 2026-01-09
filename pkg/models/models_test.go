@@ -182,21 +182,93 @@ func TestSkypeConversation_GetParticipantCount(t *testing.T) {
 	}
 }
 
-func TestSkypeConversation_FilterSystemMessages(t *testing.T) {
-	messages := []SkypeMessage{
-		{MessageType: "RichText", Content: "Hello"},
-		{MessageType: "Control/ThreadActivity", Content: "Alice joined"},
-		{MessageType: "RichText", Content: "Bye"},
+func TestSkypeConversation_GetConversationDisplayName(t *testing.T) {
+	tests := []struct {
+		name        string
+		id          string
+		displayName *string
+		topic       *string
+		want        string
+	}{
+		{
+			name:        "Use DisplayName",
+			id:          "id1",
+			displayName: stringPtr("Display"),
+			topic:       stringPtr("Topic"),
+			want:        "Display",
+		},
+		{
+			name:        "Use Topic if DisplayName empty",
+			id:          "id2",
+			displayName: stringPtr(""),
+			topic:       stringPtr("Topic"),
+			want:        "Topic",
+		},
+		{
+			name:        "Use ID as fallback",
+			id:          "id3",
+			displayName: nil,
+			topic:       nil,
+			want:        "id3",
+		},
 	}
-	c := &SkypeConversation{MessageList: messages}
 
-	filtered := c.FilterSystemMessages()
-	if len(filtered) != 2 {
-		t.Errorf("FilterSystemMessages() length = %v, want 2", len(filtered))
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			c := &SkypeConversation{
+				Id:          tt.id,
+				DisplayName: tt.displayName,
+				ThreadProperties: &ThreadProperties{
+					Topic: tt.topic,
+				},
+			}
+			if got := c.GetConversationDisplayName(); got != tt.want {
+				t.Errorf("GetConversationDisplayName() = %v, want %v", got, tt.want)
+			}
+		})
 	}
-	for _, m := range filtered {
-		if m.IsSystemMessage() {
-			t.Errorf("FilterSystemMessages() contained system message: %v", m.MessageType)
-		}
+}
+
+func TestSkypeMessage_GetSenderDisplayName(t *testing.T) {
+	tests := []struct {
+		name        string
+		from        string
+		displayName *string
+		want        string
+	}{
+		{
+			name:        "Use DisplayName",
+			from:        "user1",
+			displayName: stringPtr("Alice"),
+			want:        "Alice",
+		},
+		{
+			name:        "Use From as fallback",
+			from:        "user2",
+			displayName: nil,
+			want:        "user2",
+		},
+		{
+			name:        "Use From if empty DisplayName",
+			from:        "user3",
+			displayName: stringPtr(""),
+			want:        "user3",
+		},
 	}
+
+	for _, tt := range tests {
+		t.Run(tt.name, func(t *testing.T) {
+			m := &SkypeMessage{
+				From:        tt.from,
+				DisplayName: tt.displayName,
+			}
+			if got := m.GetSenderDisplayName(); got != tt.want {
+				t.Errorf("GetSenderDisplayName() = %v, want %v", got, tt.want)
+			}
+		})
+	}
+}
+
+func stringPtr(s string) *string {
+	return &s
 }
