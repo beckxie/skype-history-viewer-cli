@@ -77,7 +77,7 @@ func LoadSkypeHistory(path string) (*models.SkypeHistoryRoot, error) {
 	fmt.Printf("  User ID: %s\n", history.UserId)
 	fmt.Printf("  Export Date: %s\n", history.ExportDate)
 	fmt.Printf("  Conversations: %d\n", len(history.Conversations))
-	
+
 	totalMessages := 0
 	for _, conv := range history.Conversations {
 		totalMessages += len(conv.MessageList)
@@ -91,14 +91,14 @@ func LoadSkypeHistory(path string) (*models.SkypeHistoryRoot, error) {
 // loadLargeSkypeHistory loads large Skype history files using streaming
 func loadLargeSkypeHistory(file *os.File) (*models.SkypeHistoryRoot, error) {
 	fmt.Print("Parsing JSON data (this may take a while)...")
-	
+
 	// Use JSON decoder for streaming
 	decoder := json.NewDecoder(file)
-	
+
 	// Create progress ticker
 	ticker := time.NewTicker(1 * time.Second)
 	defer ticker.Stop()
-	
+
 	done := make(chan bool)
 	go func() {
 		dots := 0
@@ -112,16 +112,16 @@ func loadLargeSkypeHistory(file *os.File) (*models.SkypeHistoryRoot, error) {
 			}
 		}
 	}()
-	
+
 	// Decode JSON
 	var history models.SkypeHistoryRoot
 	if err := decoder.Decode(&history); err != nil {
 		done <- true
 		return nil, fmt.Errorf("failed to parse JSON: %w", err)
 	}
-	
+
 	done <- true
-	
+
 	// Display summary
 	fmt.Println(" Done!")
 	fmt.Println()
@@ -129,14 +129,14 @@ func loadLargeSkypeHistory(file *os.File) (*models.SkypeHistoryRoot, error) {
 	fmt.Printf("  User ID: %s\n", history.UserId)
 	fmt.Printf("  Export Date: %s\n", history.ExportDate)
 	fmt.Printf("  Conversations: %d\n", len(history.Conversations))
-	
+
 	totalMessages := 0
 	for _, conv := range history.Conversations {
 		totalMessages += len(conv.MessageList)
 	}
 	fmt.Printf("  Total Messages: %d\n", totalMessages)
 	fmt.Println()
-	
+
 	return &history, nil
 }
 
@@ -147,7 +147,7 @@ func readFileWithProgress(file *os.File, totalSize int64) ([]byte, error) {
 	if chunkSize > totalSize {
 		chunkSize = totalSize
 	}
-	
+
 	var result []byte
 	buffer := make([]byte, chunkSize)
 	bytesRead := int64(0)
@@ -202,7 +202,7 @@ func ExportConversation(conv *models.SkypeConversation, outputPath string, userI
 	// Display success message
 	color.New(color.FgGreen).Printf("✓ Exported conversation to: %s\n", outputPath)
 	color.New(color.FgYellow).Printf("  Size: %.2f KB\n", float64(len(data))/1024)
-	
+
 	return nil
 }
 
@@ -246,33 +246,33 @@ func TruncateString(s string, maxLen int) string {
 	if len(s) <= maxLen {
 		return s
 	}
-	
+
 	if maxLen <= 3 {
 		return s[:maxLen]
 	}
-	
+
 	return s[:maxLen-3] + "..."
 }
 
 // GetStats generates statistics for Skype history
 func GetStats(history *models.SkypeHistoryRoot) map[string]interface{} {
 	stats := make(map[string]interface{})
-	
+
 	// Basic counts
 	stats["total_conversations"] = len(history.Conversations)
-	
+
 	totalMessages := 0
 	totalUsers := make(map[string]bool)
 	messageTypes := make(map[string]int)
-	
+
 	var firstMessageTime, lastMessageTime *time.Time
-	
+
 	for _, conv := range history.Conversations {
 		for _, msg := range conv.MessageList {
 			totalMessages++
 			totalUsers[msg.From] = true
 			messageTypes[msg.MessageType]++
-			
+
 			// Track first and last messages
 			if msgTime, err := msg.GetTimestamp(); err == nil {
 				if firstMessageTime == nil || msgTime.Before(*firstMessageTime) {
@@ -286,11 +286,11 @@ func GetStats(history *models.SkypeHistoryRoot) map[string]interface{} {
 			}
 		}
 	}
-	
+
 	stats["total_messages"] = totalMessages
 	stats["total_users"] = len(totalUsers)
 	stats["message_types"] = messageTypes
-	
+
 	// Date range
 	if firstMessageTime != nil {
 		stats["first_message_date"] = firstMessageTime.Format("2006-01-02")
@@ -298,7 +298,7 @@ func GetStats(history *models.SkypeHistoryRoot) map[string]interface{} {
 	if lastMessageTime != nil {
 		stats["last_message_date"] = lastMessageTime.Format("2006-01-02")
 	}
-	
+
 	return stats
 }
 
@@ -307,25 +307,25 @@ func DisplayStats(stats map[string]interface{}) {
 	fmt.Println()
 	color.New(color.FgCyan, color.Bold).Println("=== Skype History Statistics ===")
 	fmt.Println()
-	
+
 	if val, ok := stats["total_conversations"]; ok {
 		fmt.Printf("Total Conversations: %v\n", val)
 	}
-	
+
 	if val, ok := stats["total_messages"]; ok {
 		fmt.Printf("Total Messages: %v\n", val)
 	}
-	
+
 	if val, ok := stats["total_users"]; ok {
 		fmt.Printf("Total Users: %v\n", val)
 	}
-	
+
 	if first, ok := stats["first_message_date"]; ok {
 		if last, ok2 := stats["last_message_date"]; ok2 {
 			fmt.Printf("Date Range: %s to %s\n", first, last)
 		}
 	}
-	
+
 	if types, ok := stats["message_types"].(map[string]int); ok {
 		fmt.Println("\nMessage Types:")
 		for msgType, count := range types {
@@ -335,6 +335,6 @@ func DisplayStats(stats map[string]interface{}) {
 			fmt.Printf("  %s: %d\n", msgType, count)
 		}
 	}
-	
+
 	fmt.Println()
 }

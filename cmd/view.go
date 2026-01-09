@@ -57,7 +57,7 @@ var viewCmd = &cobra.Command{
 
 		// Validate conversation number
 		if conversationNum < 1 || conversationNum > len(history.Conversations) {
-			return fmt.Errorf("invalid conversation number: %d (valid range: 1-%d)", 
+			return fmt.Errorf("invalid conversation number: %d (valid range: 1-%d)",
 				conversationNum, len(history.Conversations))
 		}
 
@@ -84,10 +84,10 @@ var viewCmd = &cobra.Command{
 		// Create viewer with options
 		viewerOptions := viewer.ViewerOptions{
 			ShowSystemMessages: showSystem,
-			PageSize:          pageSize,
-			SortNewestFirst:   sortNewest,
-			DateFrom:          dateFromTime,
-			DateTo:            dateToTime,
+			PageSize:           pageSize,
+			SortNewestFirst:    sortNewest,
+			DateFrom:           dateFromTime,
+			DateTo:             dateToTime,
 		}
 		messageViewer := viewer.NewMessageViewer(viewerOptions)
 
@@ -133,7 +133,7 @@ func interactiveView(history *models.SkypeHistoryRoot) error {
 	viewerOptions.PageSize = pageSize
 	viewerOptions.SortNewestFirst = sortNewest
 	messageViewer = viewer.NewMessageViewer(viewerOptions)
-	
+
 	return viewConversationWithPagination(conv, messageViewer)
 }
 

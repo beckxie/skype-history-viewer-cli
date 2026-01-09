@@ -1,0 +1,1059 @@
+{
+  "userId": "8:live:generic_user_1",
+  "exportDate": "2024-01-10T00:00:00Z",
+  "conversations": [
+    {
+      "id": "8:live:john_doe",
+      "displayName": "John Doe",
+      "version": 1704067200000,
+      "MessageList": [
+        {
+          "id": "m1",
+          "displayName": "John Doe",
+          "content": "Hello! How are you?",
+          "originalarrivaltime": "2024-01-01T10:00:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:john_doe",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067200000
+        },
+        {
+          "id": "m2",
+          "displayName": "Generic User",
+          "content": "I am good, thanks! Check this out: <a href=\"https://google.com\">Google</a>",
+          "originalarrivaltime": "2024-01-01T10:01:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067260000
+        },
+        {
+          "id": "m3",
+          "displayName": "John Doe",
+          "content": "<span style=\"font-weight:bold\">Bold text</span> and <span style=\"font-style:italic\">italic text</span>.",
+          "originalarrivaltime": "2024-01-01T10:02:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:john_doe",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067320000
+        },
+        {
+          "id": "m4",
+          "displayName": "John Doe",
+          "content": "Sent you a file!",
+          "originalarrivaltime": "2024-01-01T10:03:00Z",
+          "messagetype": "RichText/Media_GenericFile",
+          "from": "8:live:john_doe",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067380000,
+          "amsreferences": [
+            "ref1"
+          ]
+        },
+        {
+          "id": "m5",
+          "displayName": "Generic User",
+          "content": "Nice, let me send an image.",
+          "originalarrivaltime": "2024-01-01T10:04:00Z",
+          "messagetype": "RichText/UriObject",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067440000,
+          "properties": {
+            "urlpreviews": "[{\"key\":\"image_preview_url\",\"value\":{\"url\":\"image_preview_url\",\"title\":\"Image Preview\"}}]"
+          }
+        },
+        {
+          "id": "m6",
+          "displayName": "John Doe",
+          "content": "Ping",
+          "originalarrivaltime": "2024-01-01T10:05:00Z",
+          "messagetype": "Text",
+          "from": "8:live:john_doe",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067500000
+        },
+        {
+          "id": "m7",
+          "displayName": "Generic User",
+          "content": "Pong",
+          "originalarrivaltime": "2024-01-01T10:06:00Z",
+          "messagetype": "Text",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067560000
+        },
+        {
+          "id": "m8",
+          "displayName": "John Doe",
+          "content": "What's the plan for today?",
+          "originalarrivaltime": "2024-01-01T10:07:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:john_doe",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067620000
+        },
+        {
+          "id": "m9",
+          "displayName": "Generic User",
+          "content": "Just working on the CLI tool.",
+          "originalarrivaltime": "2024-01-01T10:08:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067680000
+        },
+        {
+          "id": "m10",
+          "displayName": "John Doe",
+          "content": "Got it.",
+          "originalarrivaltime": "2024-01-01T10:09:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:john_doe",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067740000
+        },
+        {
+          "id": "m11",
+          "displayName": "John Doe",
+          "content": "Did you see the weather?",
+          "originalarrivaltime": "2024-01-01T10:10:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:john_doe",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067800000
+        },
+        {
+          "id": "m12",
+          "displayName": "Generic User",
+          "content": "Sunny as always.",
+          "originalarrivaltime": "2024-01-01T10:11:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067860000
+        },
+        {
+          "id": "m13",
+          "displayName": "John Doe",
+          "content": "Here is a video link: https://youtube.com",
+          "originalarrivaltime": "2024-01-01T10:12:00Z",
+          "messagetype": "RichText/Media_Video",
+          "from": "8:live:john_doe",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067920000
+        },
+        {
+          "id": "m14",
+          "displayName": "John Doe",
+          "content": "Call ended.",
+          "originalarrivaltime": "2024-01-01T10:13:00Z",
+          "messagetype": "Event/Call",
+          "from": "8:live:john_doe",
+          "conversationid": "8:live:john_doe",
+          "version": 1704067980000
+        },
+        {
+          "id": "m15",
+          "displayName": "Generic User",
+          "content": "Missed you.",
+          "originalarrivaltime": "2024-01-01T10:14:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:john_doe",
+          "version": 1704068040000
+        },
+        {
+          "id": "m16",
+          "displayName": "John Doe",
+          "content": "Let's catch up later.",
+          "originalarrivaltime": "2024-01-01T10:15:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:john_doe",
+          "conversationid": "8:live:john_doe",
+          "version": 1704068100000
+        },
+        {
+          "id": "m17",
+          "displayName": "Generic User",
+          "content": "Sure.",
+          "originalarrivaltime": "2024-01-01T10:16:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:john_doe",
+          "version": 1704068160000
+        },
+        {
+          "id": "m18",
+          "displayName": "John Doe",
+          "content": "By the way...",
+          "originalarrivaltime": "2024-01-01T10:17:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:john_doe",
+          "conversationid": "8:live:john_doe",
+          "version": 1704068220000
+        },
+        {
+          "id": "m19",
+          "displayName": "John Doe",
+          "content": "Nevermind.",
+          "originalarrivaltime": "2024-01-01T10:18:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:john_doe",
+          "conversationid": "8:live:john_doe",
+          "version": 1704068280000
+        },
+        {
+          "id": "m20",
+          "displayName": "Generic User",
+          "content": "Haha okay.",
+          "originalarrivaltime": "2024-01-01T10:19:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:john_doe",
+          "version": 1704068340000
+        }
+      ]
+    },
+    {
+      "id": "8:live:alice_smith",
+      "displayName": "Alice Smith",
+      "version": 1704153600000,
+      "MessageList": [
+        {
+          "id": "a1",
+          "displayName": "Alice Smith",
+          "content": "Hey User!",
+          "originalarrivaltime": "2024-01-02T11:00:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704153600000
+        },
+        {
+          "id": "a2",
+          "displayName": "Alice Smith",
+          "content": "Check this location.",
+          "originalarrivaltime": "2024-01-02T11:01:00Z",
+          "messagetype": "RichText/UriObject",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704153660000
+        },
+        {
+          "id": "a3",
+          "displayName": "Generic User",
+          "content": "On my way.",
+          "originalarrivaltime": "2024-01-02T11:02:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704153720000
+        },
+        {
+          "id": "a4",
+          "displayName": "Alice Smith",
+          "content": "Wait!",
+          "originalarrivaltime": "2024-01-02T11:03:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704153780000
+        },
+        {
+          "id": "a5",
+          "displayName": "Alice Smith",
+          "content": "Forgot my keys.",
+          "originalarrivaltime": "2024-01-02T11:04:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704153840000
+        },
+        {
+          "id": "a6",
+          "displayName": "Generic User",
+          "content": "I can pick you up.",
+          "originalarrivaltime": "2024-01-02T11:05:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704153900000
+        },
+        {
+          "id": "a7",
+          "displayName": "Alice Smith",
+          "content": "Thanks!",
+          "originalarrivaltime": "2024-01-02T11:06:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704153960000
+        },
+        {
+          "id": "a8",
+          "displayName": "Alice Smith",
+          "content": "I'm outside.",
+          "originalarrivaltime": "2024-01-02T11:07:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704154020000
+        },
+        {
+          "id": "a9",
+          "displayName": "Alice Smith",
+          "content": "Where are you?",
+          "originalarrivaltime": "2024-01-02T11:08:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704154080000
+        },
+        {
+          "id": "a10",
+          "displayName": "Generic User",
+          "content": "Traffic is bad.",
+          "originalarrivaltime": "2024-01-02T11:09:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704154140000
+        },
+        {
+          "id": "a11",
+          "displayName": "Alice Smith",
+          "content": "No worries.",
+          "originalarrivaltime": "2024-01-02T11:10:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704154200000
+        },
+        {
+          "id": "a12",
+          "displayName": "Alice Smith",
+          "content": "I'll wait at the cafe.",
+          "originalarrivaltime": "2024-01-02T11:11:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704154260000
+        },
+        {
+          "id": "a13",
+          "displayName": "Alice Smith",
+          "content": "Ordering a coffee.",
+          "originalarrivaltime": "2024-01-02T11:12:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704154320000
+        },
+        {
+          "id": "a14",
+          "displayName": "Generic User",
+          "content": "Get me one too.",
+          "originalarrivaltime": "2024-01-02T11:13:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704154380000
+        },
+        {
+          "id": "a15",
+          "displayName": "Alice Smith",
+          "content": "Black coffee?",
+          "originalarrivaltime": "2024-01-02T11:14:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704154440000
+        },
+        {
+          "id": "a16",
+          "displayName": "Generic User",
+          "content": "Yes.",
+          "originalarrivaltime": "2024-01-02T11:15:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704154500000
+        },
+        {
+          "id": "a17",
+          "displayName": "Alice Smith",
+          "content": "Got it.",
+          "originalarrivaltime": "2024-01-02T11:16:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704154560000
+        },
+        {
+          "id": "a18",
+          "displayName": "Alice Smith",
+          "content": "See you soon.",
+          "originalarrivaltime": "2024-01-02T11:17:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704154620000
+        },
+        {
+          "id": "a19",
+          "displayName": "Generic User",
+          "content": "Almost there.",
+          "originalarrivaltime": "2024-01-02T11:18:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704154680000
+        },
+        {
+          "id": "a20",
+          "displayName": "Alice Smith",
+          "content": "Okay.",
+          "originalarrivaltime": "2024-01-02T11:19:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "8:live:alice_smith",
+          "version": 1704154740000
+        }
+      ]
+    },
+    {
+      "id": "19:dev_team@thread.skype",
+      "displayName": "Dev Team Chat",
+      "version": 1704240000000,
+      "threadProperties": {
+        "topic": "Dev Team Chat",
+        "membercount": 5
+      },
+      "MessageList": [
+        {
+          "id": "g1",
+          "displayName": "Manager",
+          "content": "Meeting in 5 mins.",
+          "originalarrivaltime": "2024-01-03T09:00:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:manager",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240000000
+        },
+        {
+          "id": "g2",
+          "displayName": "Generic User",
+          "content": "I'm ready.",
+          "originalarrivaltime": "2024-01-03T09:01:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240060000
+        },
+        {
+          "id": "g3",
+          "displayName": "Manager",
+          "content": "<addmember><eventtime>1704240120000</eventtime><initiator>8:live:manager</initiator><target>8:live:alice_smith</target></addmember>",
+          "originalarrivaltime": "2024-01-03T09:02:00Z",
+          "messagetype": "Control/ThreadActivity",
+          "from": "8:live:manager",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240120000
+        },
+        {
+          "id": "g4",
+          "displayName": "Bob",
+          "content": "Coming!",
+          "originalarrivaltime": "2024-01-03T09:03:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:bob",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240180000
+        },
+        {
+          "id": "g5",
+          "displayName": "Alice Smith",
+          "content": "Hi everyone.",
+          "originalarrivaltime": "2024-01-03T09:04:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240240000
+        },
+        {
+          "id": "g6",
+          "displayName": "Manager",
+          "content": "Today's agenda: Skype History Viewer CLI",
+          "originalarrivaltime": "2024-01-03T09:05:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:manager",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240300000
+        },
+        {
+          "id": "g7",
+          "displayName": "Generic User",
+          "content": "We need more tests.",
+          "originalarrivaltime": "2024-01-03T09:06:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240360000
+        },
+        {
+          "id": "g8",
+          "displayName": "Alice Smith",
+          "content": "Agreed.",
+          "originalarrivaltime": "2024-01-03T09:07:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240420000
+        },
+        {
+          "id": "g9",
+          "displayName": "Bob",
+          "content": "I can help with unit tests.",
+          "originalarrivaltime": "2024-01-03T09:08:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:bob",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240480000
+        },
+        {
+          "id": "g10",
+          "displayName": "Manager",
+          "content": "Great. Bob, take the lead.",
+          "originalarrivaltime": "2024-01-03T09:09:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:manager",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240540000
+        },
+        {
+          "id": "g11",
+          "displayName": "Bob",
+          "content": "Will do.",
+          "originalarrivaltime": "2024-01-03T09:10:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:bob",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240600000
+        },
+        {
+          "id": "g12",
+          "displayName": "Generic User",
+          "content": "Check this screenshot: <a href=\"https://image_server.com/123.jpg\">Screenshot</a>",
+          "originalarrivaltime": "2024-01-03T09:11:00Z",
+          "messagetype": "RichText/UriObject",
+          "from": "8:live:generic_user_1",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240660000
+        },
+        {
+          "id": "g13",
+          "displayName": "Alice Smith",
+          "content": "Looks good.",
+          "originalarrivaltime": "2024-01-03T09:12:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240720000
+        },
+        {
+          "id": "g14",
+          "displayName": "Manager",
+          "content": "Any other business?",
+          "originalarrivaltime": "2024-01-03T09:13:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:manager",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240780000
+        },
+        {
+          "id": "g15",
+          "displayName": "Bob",
+          "content": "Not from me.",
+          "originalarrivaltime": "2024-01-03T09:14:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:bob",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240840000
+        },
+        {
+          "id": "g16",
+          "displayName": "Generic User",
+          "content": "Me neither.",
+          "originalarrivaltime": "2024-01-03T09:15:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240900000
+        },
+        {
+          "id": "g17",
+          "displayName": "Alice Smith",
+          "content": "I'm clear.",
+          "originalarrivaltime": "2024-01-03T09:16:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:alice_smith",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704240960000
+        },
+        {
+          "id": "g18",
+          "displayName": "Manager",
+          "content": "Meeting adjourned.",
+          "originalarrivaltime": "2024-01-03T09:17:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:manager",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704241020000
+        },
+        {
+          "id": "g19",
+          "displayName": "System",
+          "content": "<topicupdate><eventtime>1704241080000</eventtime><initiator>8:live:manager</initiator><value>Sprint Retro</value></topicupdate>",
+          "originalarrivaltime": "2024-01-03T09:18:00Z",
+          "messagetype": "Control/ThreadActivity",
+          "from": "8:live:manager",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704241080000
+        },
+        {
+          "id": "g20",
+          "displayName": "Bob",
+          "content": "Bye!",
+          "originalarrivaltime": "2024-01-03T09:19:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:bob",
+          "conversationid": "19:dev_team@thread.skype",
+          "version": 1704241140000
+        }
+      ]
+    },
+    {
+      "id": "19:family_group@thread.skype",
+      "displayName": "Family Group",
+      "version": 1704326400000,
+      "threadProperties": {
+        "topic": "Family Group",
+        "membercount": 4
+      },
+      "MessageList": [
+        {
+          "id": "f1",
+          "displayName": "Mom",
+          "content": "Dinner at 7?",
+          "originalarrivaltime": "2024-01-04T18:00:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:mom",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704326400000
+        },
+        {
+          "id": "f2",
+          "displayName": "Generic User",
+          "content": "Yes, I'll be there.",
+          "originalarrivaltime": "2024-01-04T18:01:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704326460000
+        },
+        {
+          "id": "f3",
+          "displayName": "Dad",
+          "content": "<span style=\"color:#ff0000\">Don't forget the wine!</span>",
+          "originalarrivaltime": "2024-01-04T18:02:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:dad",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704326520000
+        },
+        {
+          "id": "f4",
+          "displayName": "Sister",
+          "content": "I'm bringing dessert.",
+          "originalarrivaltime": "2024-01-04T18:03:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:sister",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704326580000
+        },
+        {
+          "id": "f5",
+          "displayName": "Mom",
+          "content": "Great.",
+          "originalarrivaltime": "2024-01-04T18:04:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:mom",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704326640000
+        },
+        {
+          "id": "f6",
+          "displayName": "Mom",
+          "content": "Sent a photo of the chicken.",
+          "originalarrivaltime": "2024-01-04T18:05:00Z",
+          "messagetype": "RichText/UriObject",
+          "from": "8:live:mom",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704326700000
+        },
+        {
+          "id": "f7",
+          "displayName": "Generic User",
+          "content": "Looks delicious!",
+          "originalarrivaltime": "2024-01-04T18:06:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704326760000
+        },
+        {
+          "id": "f8",
+          "displayName": "Dad",
+          "content": "Is Bob coming?",
+          "originalarrivaltime": "2024-01-04T18:07:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:dad",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704326820000
+        },
+        {
+          "id": "f9",
+          "displayName": "Mom",
+          "content": "I'll ask him.",
+          "originalarrivaltime": "2024-01-04T18:08:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:mom",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704326880000
+        },
+        {
+          "id": "f10",
+          "displayName": "Mom",
+          "content": "He's busy.",
+          "originalarrivaltime": "2024-01-04T18:09:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:mom",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704326940000
+        },
+        {
+          "id": "f11",
+          "displayName": "Sister",
+          "content": "Too bad.",
+          "originalarrivaltime": "2024-01-04T18:10:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:sister",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704327000000
+        },
+        {
+          "id": "f12",
+          "displayName": "Sister",
+          "content": "What about Sarah?",
+          "originalarrivaltime": "2024-01-04T18:11:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:sister",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704327060000
+        },
+        {
+          "id": "f13",
+          "displayName": "Mom",
+          "content": "She is coming.",
+          "originalarrivaltime": "2024-01-04T18:12:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:mom",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704327120000
+        },
+        {
+          "id": "f14",
+          "displayName": "Dad",
+          "content": "Excellent.",
+          "originalarrivaltime": "2024-01-04T18:13:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:dad",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704327180000
+        },
+        {
+          "id": "f15",
+          "displayName": "Generic User",
+          "content": "I'll bring the music.",
+          "originalarrivaltime": "2024-01-04T18:14:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704327240000
+        },
+        {
+          "id": "f16",
+          "displayName": "Mom",
+          "content": "Perfect.",
+          "originalarrivaltime": "2024-01-04T18:15:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:mom",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704327300000
+        },
+        {
+          "id": "f17",
+          "displayName": "Sister",
+          "content": "I'll be a bit late.",
+          "originalarrivaltime": "2024-01-04T18:16:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:sister",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704327360000
+        },
+        {
+          "id": "f18",
+          "displayName": "Mom",
+          "content": "Okay.",
+          "originalarrivaltime": "2024-01-04T18:17:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:mom",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704327420000
+        },
+        {
+          "id": "f19",
+          "displayName": "Dad",
+          "content": "Starting the grill.",
+          "originalarrivaltime": "2024-01-04T18:18:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:dad",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704327480000
+        },
+        {
+          "id": "f20",
+          "displayName": "Mom",
+          "content": "See you all soon.",
+          "originalarrivaltime": "2024-01-04T18:19:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:mom",
+          "conversationid": "19:family_group@thread.skype",
+          "version": 1704327540000
+        }
+      ]
+    },
+    {
+      "id": "19:tech_talk@thread.skype",
+      "displayName": "Tech Talk",
+      "version": 1704412800000,
+      "threadProperties": {
+        "topic": "Tech Talk",
+        "membercount": 10
+      },
+      "MessageList": [
+        {
+          "id": "t1",
+          "displayName": "Techie1",
+          "content": "Rust or Go?",
+          "originalarrivaltime": "2024-01-05T12:00:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie1",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704412800000
+        },
+        {
+          "id": "t2",
+          "displayName": "Generic User",
+          "content": "Go for CLI, Rust for performance.",
+          "originalarrivaltime": "2024-01-05T12:01:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704412860000
+        },
+        {
+          "id": "t3",
+          "displayName": "Techie2",
+          "content": "Agreed.",
+          "originalarrivaltime": "2024-01-05T12:02:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie2",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704412920000
+        },
+        {
+          "id": "t4",
+          "displayName": "Techie3",
+          "content": "But Rust is harder.",
+          "originalarrivaltime": "2024-01-05T12:03:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie3",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704412980000
+        },
+        {
+          "id": "t5",
+          "displayName": "Techie1",
+          "content": "Safety first!",
+          "originalarrivaltime": "2024-01-05T12:04:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie1",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413040000
+        },
+        {
+          "id": "t6",
+          "displayName": "Generic User",
+          "content": "Go is safe too.",
+          "originalarrivaltime": "2024-01-05T12:05:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413100000
+        },
+        {
+          "id": "t7",
+          "displayName": "Techie2",
+          "content": "GC overhead though.",
+          "originalarrivaltime": "2024-01-05T12:06:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie2",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413160000
+        },
+        {
+          "id": "t8",
+          "displayName": "Techie4",
+          "content": "Managed memories help.",
+          "originalarrivaltime": "2024-01-05T12:07:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie4",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413220000
+        },
+        {
+          "id": "t9",
+          "displayName": "Techie1",
+          "content": "Anyway, check this repo: <a href=\"https://github.com/beckxie/skype-history-viewer-cli\">Skype Viewer</a>",
+          "originalarrivaltime": "2024-01-05T12:08:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie1",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413280000
+        },
+        {
+          "id": "t10",
+          "displayName": "Generic User",
+          "content": "Thanks for sharing!",
+          "originalarrivaltime": "2024-01-05T12:09:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413340000
+        },
+        {
+          "id": "t11",
+          "displayName": "Techie3",
+          "content": "Starring it now.",
+          "originalarrivaltime": "2024-01-05T12:10:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie3",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413400000
+        },
+        {
+          "id": "t12",
+          "displayName": "Techie2",
+          "content": "Me too.",
+          "originalarrivaltime": "2024-01-05T12:11:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie2",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413460000
+        },
+        {
+          "id": "t13",
+          "displayName": "Techie4",
+          "content": "Does it support images?",
+          "originalarrivaltime": "2024-01-05T12:12:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie4",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413520000
+        },
+        {
+          "id": "t14",
+          "displayName": "Generic User",
+          "content": "Yes, as URI objects.",
+          "originalarrivaltime": "2024-01-05T12:13:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:generic_user_1",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413580000
+        },
+        {
+          "id": "t15",
+          "displayName": "Techie1",
+          "content": "Cool.",
+          "originalarrivaltime": "2024-01-05T12:14:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie1",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413640000
+        },
+        {
+          "id": "t16",
+          "displayName": "Techie1",
+          "content": "Sent a tutorial video.",
+          "originalarrivaltime": "2024-01-05T12:15:00Z",
+          "messagetype": "RichText/Media_Video",
+          "from": "8:live:techie1",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413700000
+        },
+        {
+          "id": "t17",
+          "displayName": "Techie2",
+          "content": "Watching.",
+          "originalarrivaltime": "2024-01-05T12:16:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie2",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413760000
+        },
+        {
+          "id": "t18",
+          "displayName": "Techie3",
+          "content": "Very helpful.",
+          "originalarrivaltime": "2024-01-05T12:17:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie3",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413820000
+        },
+        {
+          "id": "t19",
+          "displayName": "Techie4",
+          "content": "Wait, I have a question.",
+          "originalarrivaltime": "2024-01-05T12:18:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie4",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413880000
+        },
+        {
+          "id": "t20",
+          "displayName": "Techie1",
+          "content": "Go ahead.",
+          "originalarrivaltime": "2024-01-05T12:19:00Z",
+          "messagetype": "RichText",
+          "from": "8:live:techie1",
+          "conversationid": "19:tech_talk@thread.skype",
+          "version": 1704413940000
+        }
+      ]
+    }
+  ]
+}

@@ -41,7 +41,7 @@ var exportCmd = &cobra.Command{
 
 		// Validate conversation number
 		if num > len(history.Conversations) {
-			return fmt.Errorf("conversation number %d not found (valid range: 1-%d)", 
+			return fmt.Errorf("conversation number %d not found (valid range: 1-%d)",
 				num, len(history.Conversations))
 		}
 
@@ -55,7 +55,7 @@ var exportCmd = &cobra.Command{
 			convName = strings.ReplaceAll(convName, "/", "_")
 			convName = strings.ReplaceAll(convName, ":", "_")
 			convName = strings.ReplaceAll(convName, " ", "_")
-			
+
 			outputPath = fmt.Sprintf("conversation_%s.json", convName)
 		}
 

@@ -13,9 +13,9 @@ import (
 
 // SearchManager handles searching through Skype history
 type SearchManager struct {
-	history      *models.SkypeHistoryRoot
-	searchCache  map[string][]viewer.SearchResult
-	cacheMutex   sync.RWMutex
+	history        *models.SkypeHistoryRoot
+	searchCache    map[string][]viewer.SearchResult
+	cacheMutex     sync.RWMutex
 	lastSearchTime time.Time
 }
 
@@ -119,10 +119,10 @@ func (sm *SearchManager) Search(options SearchOptions) []viewer.SearchResult {
 	}
 
 	close(progressChan)
-	
+
 	// Cache results
 	sm.cacheResults(cacheKey, results)
-	
+
 	return results
 }
 
@@ -202,7 +202,7 @@ func (sm *SearchManager) extractContext(text, query string, contextSize int) str
 	}
 
 	context := text[start:end]
-	
+
 	// Add ellipsis if truncated
 	if start > 0 {
 		context = "..." + context
@@ -271,12 +271,12 @@ func (sm *SearchManager) showProgress(progressChan <-chan float64, total int) {
 
 		percentage := (progress / float64(total)) * 100
 		elapsed := time.Since(startTime)
-		
+
 		// Clear line and show progress
 		fmt.Printf("\r")
-		color.New(color.FgYellow).Printf("Searching... %.1f%% (%d/%d messages) - %.1fs", 
+		color.New(color.FgYellow).Printf("Searching... %.1f%% (%d/%d messages) - %.1fs",
 			percentage, int(progress), total, elapsed.Seconds())
-		
+
 		lastUpdate = time.Now()
 	}
 
@@ -288,6 +288,6 @@ func (sm *SearchManager) showProgress(progressChan <-chan float64, total int) {
 func (sm *SearchManager) ClearCache() {
 	sm.cacheMutex.Lock()
 	defer sm.cacheMutex.Unlock()
-	
+
 	sm.searchCache = make(map[string][]viewer.SearchResult)
 }

@@ -1,0 +1,46 @@
+{
+    "endpoints": [
+        {
+            "endpointId": "mock-endpoint-id",
+            "aadDeviceId": null,
+            "nodeId": null,
+            "timestamp": "2024-01-10T00:00:00.0000000Z",
+            "transports": {
+                "transports": [
+                    {
+                        "transportType": "TROUTER",
+                        "creationTime": 1704888000000,
+                        "ttl": 86400,
+                        "snoozeSeconds": null,
+                        "path": "https://mock.trouter.skype.com/v4/f/mock-path",
+                        "additionalAttributes": null,
+                        "contexts": [
+                            ""
+                        ],
+                        "isDeleted": false,
+                        "trackingInfo": null,
+                        "contentEncryption": null
+                    }
+                ]
+            },
+            "clientDescription": {
+                "languageId": "",
+                "templateKey": "MockCDL_1.0",
+                "platform": "web",
+                "appId": "MockApp",
+                "aesKey": "",
+                "authKey": null,
+                "cryptoMethod": null,
+                "xuid": null,
+                "notificationFilteringService": null,
+                "productContext": "",
+                "tenantId": null,
+                "acsStableResourceId": null,
+                "allowMultipleApnsReg": null,
+                "keyGenerationTime": null
+            },
+            "clientSettings": null,
+            "activity": null
+        }
+    ]
+}
