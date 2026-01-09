@@ -1,6 +1,6 @@
 module github.com/beckxie/skype-history-viewer-cli
 
-go 1.21
+go 1.25.5
 
 require (
 	github.com/fatih/color v1.16.0
