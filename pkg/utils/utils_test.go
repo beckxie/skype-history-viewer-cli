@@ -1,13 +1,17 @@
 package utils
 
 import (
+	"bytes"
 	"encoding/json"
+	"io"
 	"os"
 	"path/filepath"
+	"strings"
 	"testing"
 	"time"
 
 	"github.com/beckxie/skype-history-viewer-cli/pkg/models"
+	"github.com/fatih/color"
 )
 
 func TestParseDateString(t *testing.T) {
@@ -201,5 +205,51 @@ func TestExportConversation(t *testing.T) {
 	}
 	if len(exported.Conversations) != 1 || exported.Conversations[0].Id != "test-conv" {
 		t.Error("exported conversation data mismatch")
+	}
+}
+func TestDisplayStats(t *testing.T) {
+	stats := map[string]interface{}{
+		"total_conversations": 5,
+		"total_messages":      100,
+		"total_users":         10,
+		"first_message_date":  "2024-01-01",
+		"last_message_date":   "2024-01-31",
+		"message_types": map[string]int{
+			"Text":  80,
+			"Image": 20,
+		},
+	}
+
+	// Capture stdout
+	oldStdout := os.Stdout
+	oldColorOutput := color.Output
+	r, w, _ := os.Pipe()
+	os.Stdout = w
+	color.Output = w
+
+	DisplayStats(stats)
+
+	w.Close()
+	os.Stdout = oldStdout
+	color.Output = oldColorOutput
+
+	var buf bytes.Buffer
+	io.Copy(&buf, r)
+	output := buf.String()
+
+	expectedPhrases := []string{
+		"Skype History Statistics",
+		"Total Conversations: 5",
+		"Total Messages: 100",
+		"Total Users: 10",
+		"Date Range: 2024-01-01 to 2024-01-31",
+		"Text: 80",
+		"Image: 20",
+	}
+
+	for _, phrase := range expectedPhrases {
+		if !strings.Contains(output, phrase) {
+			t.Errorf("output missing phrase: %s", phrase)
+		}
 	}
 }

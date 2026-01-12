@@ -1,8 +1,10 @@
 package viewer
 
 import (
+	"bytes"
 	"io"
 	"os"
+	"strings"
 	"testing"
 	"time"
 
@@ -107,6 +109,50 @@ func TestDisplaySearchResults(t *testing.T) {
 	out, _ := io.ReadAll(r)
 	if len(out) == 0 {
 		t.Error("expected output from DisplaySearchResults, got empty")
+	}
+}
+
+func TestDisplayConversationList(t *testing.T) {
+	// Capture stdout
+	oldStdout := os.Stdout
+	r, w, _ := os.Pipe()
+	os.Stdout = w
+
+	history := &models.SkypeHistoryRoot{
+		Conversations: []models.SkypeConversation{
+			{
+				Id:          "c1",
+				DisplayName: stringPtr("General Chat"),
+				MessageList: []models.SkypeMessage{{}, {}},
+			},
+			{
+				Id:          "c2",
+				DisplayName: stringPtr("Project X"),
+				MessageList: []models.SkypeMessage{{}},
+			},
+		},
+	}
+
+	v := NewMessageViewer(ViewerOptions{})
+	v.DisplayConversationList(history.Conversations)
+
+	w.Close()
+	os.Stdout = oldStdout
+
+	var buf bytes.Buffer
+	io.Copy(&buf, r)
+	output := buf.String()
+
+	expectedPhrases := []string{
+		"#", "CONVERSATION", "PARTICIPANTS", "MESSAGES", // Table headers (uppercase by default)
+		"1", "General Chat", "2",
+		"2", "Project X", "1",
+	}
+
+	for _, phrase := range expectedPhrases {
+		if !strings.Contains(output, phrase) {
+			t.Errorf("output missing phrase: %s", phrase)
+		}
 	}
 }
 
