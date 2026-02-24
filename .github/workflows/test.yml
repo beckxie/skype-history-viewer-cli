@@ -3,11 +3,24 @@ name: Test
 on:
   push:
     branches: [ main ]
-  pull_request:
-    branches: [ main ]
+  pull_request_review:
+    types: [submitted]
+  issue_comment:
+    types: [created]
+  workflow_dispatch:
 
 jobs:
   test:
+    if: >
+      github.event_name == 'push' ||
+      github.event_name == 'workflow_dispatch' ||
+      (github.event_name == 'pull_request_review' &&
+      github.event.pull_request.base.ref == 'main' &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.review.author_association)) ||
+      (github.event_name == 'issue_comment' &&
+      github.event.issue.pull_request &&
+      contains(github.event.comment.body, '/run-ci') &&
+      contains(fromJSON('["OWNER","MEMBER","COLLABORATOR"]'), github.event.comment.author_association))
     runs-on: ubuntu-latest
     strategy:
       matrix:
@@ -15,6 +28,8 @@ jobs:
     
     steps:
     - uses: actions/checkout@v4
+      with:
+        ref: ${{ github.event_name == 'pull_request_review' && github.event.pull_request.head.sha || github.event_name == 'issue_comment' && format('refs/pull/{0}/head', github.event.issue.number) || github.sha }}
     
     - name: Set up Go
       uses: actions/setup-go@v5
@@ -28,6 +43,7 @@ jobs:
       run: go test -v -coverprofile=coverage.txt -covermode=atomic ./...
     
     - name: Upload coverage reports to Codecov
+      if: github.event_name == 'push'
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
