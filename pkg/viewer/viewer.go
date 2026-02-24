@@ -56,14 +56,20 @@ func (v *MessageViewer) DisplayConversationList(conversations []models.SkypeConv
 
 		lastMessage := ""
 		if len(conv.MessageList) > 0 {
-			sort.Slice(conv.MessageList, func(i, j int) bool {
-				ti, _ := conv.MessageList[i].GetTimestamp()
-				tj, _ := conv.MessageList[j].GetTimestamp()
-				return ti.Before(tj)
-			})
-			lastMsg := conv.MessageList[len(conv.MessageList)-1]
-			if t, err := lastMsg.GetTimestamp(); err == nil {
-				lastMessage = t.Format("2006-01-02 15:04")
+			var latest time.Time
+			hasLatest := false
+			for _, msg := range conv.MessageList {
+				t, err := msg.GetTimestamp()
+				if err != nil {
+					continue
+				}
+				if !hasLatest || t.After(latest) {
+					latest = t
+					hasLatest = true
+				}
+			}
+			if hasLatest {
+				lastMessage = latest.Format("2006-01-02 15:04")
 			}
 		}
 
@@ -115,6 +121,15 @@ func (v *MessageViewer) DisplayConversation(conv *models.SkypeConversation, page
 			tj, _ := messages[j].GetTimestamp()
 			return ti.After(tj)
 		})
+	}
+
+	if len(messages) == 0 {
+		fmt.Println()
+		color.New(color.FgCyan, color.Bold).Printf("=== %s ===\n", conv.GetConversationDisplayName())
+		color.New(color.FgYellow).Println("Page 0/0 (Messages 0-0 of 0)")
+		fmt.Println(strings.Repeat("-", 80))
+		color.New(color.FgRed).Println("No messages found for the current filters.")
+		return
 	}
 
 	// Calculate pagination

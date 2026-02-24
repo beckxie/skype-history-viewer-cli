@@ -9,6 +9,7 @@ import (
 	"time"
 
 	"github.com/beckxie/skype-history-viewer-cli/pkg/models"
+	"github.com/fatih/color"
 )
 
 func TestNewMessageViewer(t *testing.T) {
@@ -77,6 +78,39 @@ func TestDisplayConversationFiltering(t *testing.T) {
 	}
 	v := NewMessageViewer(options)
 	v.DisplayConversation(conv, 1)
+}
+
+func TestDisplayConversationEmptyAfterFilter(t *testing.T) {
+	oldStdout := os.Stdout
+	oldColorOutput := color.Output
+	r, w, _ := os.Pipe()
+	os.Stdout = w
+	color.Output = w
+
+	from, _ := time.Parse(time.RFC3339, "2099-01-01T00:00:00Z")
+	conv := &models.SkypeConversation{
+		DisplayName: stringPtr("Empty Conv"),
+		MessageList: []models.SkypeMessage{
+			{OriginalId: "1", Timestamp: "2024-01-01T10:00:00Z", Content: "Only msg"},
+		},
+	}
+
+	options := ViewerOptions{
+		DateFrom: &from,
+		PageSize: 20,
+	}
+	v := NewMessageViewer(options)
+	v.DisplayConversation(conv, 1)
+
+	w.Close()
+	os.Stdout = oldStdout
+	color.Output = oldColorOutput
+
+	out, _ := io.ReadAll(r)
+	output := string(out)
+	if !strings.Contains(output, "No messages found for the current filters.") {
+		t.Fatalf("expected empty-state message, got: %s", output)
+	}
 }
 
 func TestDisplaySearchResults(t *testing.T) {
@@ -153,6 +187,30 @@ func TestDisplayConversationList(t *testing.T) {
 		if !strings.Contains(output, phrase) {
 			t.Errorf("output missing phrase: %s", phrase)
 		}
+	}
+}
+
+func TestDisplayConversationListDoesNotMutateOrder(t *testing.T) {
+	oldStdout := os.Stdout
+	defer func() { os.Stdout = oldStdout }()
+	os.Stdout = os.NewFile(0, os.DevNull)
+
+	conv := models.SkypeConversation{
+		Id: "c1",
+		MessageList: []models.SkypeMessage{
+			{OriginalId: "newer", Timestamp: "2024-01-01T11:00:00Z"},
+			{OriginalId: "older", Timestamp: "2024-01-01T10:00:00Z"},
+		},
+	}
+	history := &models.SkypeHistoryRoot{
+		Conversations: []models.SkypeConversation{conv},
+	}
+
+	v := NewMessageViewer(ViewerOptions{})
+	v.DisplayConversationList(history.Conversations)
+
+	if history.Conversations[0].MessageList[0].OriginalId != "newer" {
+		t.Fatal("DisplayConversationList mutated conversation message order")
 	}
 }
 
