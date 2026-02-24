@@ -8,6 +8,8 @@ import (
 	"time"
 )
 
+var htmlTagRegex = regexp.MustCompile(`<[^>]+>`)
+
 // SkypeMessage represents a single message from Skype chat history
 type SkypeMessage struct {
 	OriginalId     string             `json:"id"`
@@ -20,6 +22,10 @@ type SkypeMessage struct {
 	Version        int64              `json:"version"`
 	Properties     *MessageProperties `json:"properties"`
 	AmsReferences  []string           `json:"amsreferences"`
+
+	cachedTimestamp time.Time `json:"-"`
+	timestampParsed bool      `json:"-"`
+	timestampErr    error     `json:"-"`
 }
 
 // MessageProperties contains additional message properties
@@ -64,8 +70,7 @@ type SkypeHistoryRoot struct {
 // GetDisplayText returns clean text without HTML/XML tags
 func (m *SkypeMessage) GetDisplayText() string {
 	// Remove HTML tags
-	re := regexp.MustCompile(`<[^>]+>`)
-	cleanContent := re.ReplaceAllString(m.Content, "")
+	cleanContent := htmlTagRegex.ReplaceAllString(m.Content, "")
 
 	// Unescape HTML entities
 	cleanContent = html.UnescapeString(cleanContent)
@@ -89,6 +94,13 @@ func (m *SkypeMessage) IsSystemMessage() bool {
 
 // GetTimestamp parses and returns the message timestamp
 func (m *SkypeMessage) GetTimestamp() (time.Time, error) {
+	if m.timestampParsed {
+		if m.timestampErr != nil {
+			return time.Time{}, m.timestampErr
+		}
+		return m.cachedTimestamp, nil
+	}
+
 	// Try different time formats
 	formats := []string{
 		time.RFC3339,
@@ -99,11 +111,15 @@ func (m *SkypeMessage) GetTimestamp() (time.Time, error) {
 
 	for _, format := range formats {
 		if t, err := time.Parse(format, m.Timestamp); err == nil {
+			m.cachedTimestamp = t
+			m.timestampParsed = true
 			return t, nil
 		}
 	}
 
-	return time.Time{}, fmt.Errorf("unable to parse timestamp: %s", m.Timestamp)
+	m.timestampParsed = true
+	m.timestampErr = fmt.Errorf("unable to parse timestamp: %s", m.Timestamp)
+	return time.Time{}, m.timestampErr
 }
 
 // GetConversationDisplayName returns the display name for the conversation
