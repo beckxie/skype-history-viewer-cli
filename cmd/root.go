@@ -15,9 +15,9 @@ var (
 
 // rootCmd represents the base command
 var rootCmd = &cobra.Command{
-	Use:   "skype-viewer",
+	Use:   "skype-history-viewer-cli",
 	Short: "A CLI tool to view and search Skype chat history",
-	Long: `SkypeHistoryViewer-go is a command-line tool that allows you to:
+	Long: `skype-history-viewer-cli is a command-line tool that allows you to:
 - View your exported Skype chat history
 - Search through messages
 - Export conversations
