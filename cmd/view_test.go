@@ -72,3 +72,15 @@ func TestCalculateTotalPages(t *testing.T) {
 		t.Fatalf("calculateTotalPages() = %d, want 2", got)
 	}
 }
+
+func TestNavigationPrompt(t *testing.T) {
+	if got := navigationPrompt(0); got != "\nNavigation (q to quit): " {
+		t.Fatalf("navigationPrompt(0) = %q", got)
+	}
+	if got := navigationPrompt(1); got != "\nNavigation (q to quit): " {
+		t.Fatalf("navigationPrompt(1) = %q", got)
+	}
+	if got := navigationPrompt(2); got != "\nNavigation (j/k or n/p, g/G, q): " {
+		t.Fatalf("navigationPrompt(2) = %q", got)
+	}
+}
