@@ -85,6 +85,16 @@ Flags:
   --date-to string      Filter messages to this date (YYYY-MM-DD)
 ```
 
+Interactive controls (TTY mode):
+
+- `j` / `n` / Down Arrow: next page
+- `k` / `p` / Up Arrow: previous page
+- `g`: first page
+- `G`: last page
+- `q`: quit viewer
+
+In non-TTY environments, the viewer automatically falls back to line-based input.
+
 #### `search` - Search through messages
 
 ```bash
@@ -169,7 +179,7 @@ skype-history-viewer-cli view -f messages.json
 
 ## Features in Detail
 
-- **Pagination**: Large conversations are paginated for easy navigation
+- **Pagination + Keyboard Navigation**: Large conversations are paginated and support direct key navigation in TTY mode
 - **Date Filtering**: Filter messages by date range
 - **System Messages**: Option to show/hide system messages
 - **Progress Indicators**: Visual progress for file loading and searching
