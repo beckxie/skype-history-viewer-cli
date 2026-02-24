@@ -75,7 +75,7 @@ to the new format (with 'conversations' array) that can be read by all commands.
 		fmt.Printf("  Original size: %.2f KB\n", float64(len(data))/1024)
 		fmt.Printf("  New size: %.2f KB\n", float64(len(outputData))/1024)
 		fmt.Println("\nYou can now use this file with all commands:")
-		color.New(color.FgCyan).Printf("  ./skype-viewer list -f %s\n", outputFile)
+		color.New(color.FgCyan).Printf("  ./skype-history-viewer-cli list -f %s\n", outputFile)
 
 		return nil
 	},
