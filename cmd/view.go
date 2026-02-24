@@ -204,8 +204,9 @@ func viewConversationWithKeyNavigation(conv *models.SkypeConversation, v *viewer
 			page = totalPages
 		}
 
+		clearTerminalScreen()
 		v.DisplayConversation(conv, page)
-		fmt.Print("\nNavigation (j/k or n/p, g/G, q): ")
+		fmt.Print(navigationPrompt(totalPages))
 
 		action, err := readNavigationAction(reader)
 		fmt.Println()
@@ -234,6 +235,17 @@ func viewConversationWithKeyNavigation(conv *models.SkypeConversation, v *viewer
 			}
 		}
 	}
+}
+
+func clearTerminalScreen() {
+	fmt.Print("\033[H\033[2J")
+}
+
+func navigationPrompt(totalPages int) string {
+	if totalPages <= 1 {
+		return "\nNavigation (q to quit): "
+	}
+	return "\nNavigation (j/k or n/p, g/G, q): "
 }
 
 func readNavigationAction(reader *bufio.Reader) (string, error) {
