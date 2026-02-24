@@ -3,7 +3,6 @@ package utils
 import (
 	"encoding/json"
 	"fmt"
-	"io"
 	"os"
 	"path/filepath"
 	"strings"
@@ -57,34 +56,16 @@ func LoadSkypeHistory(path string) (*models.SkypeHistoryRoot, error) {
 		return loadLargeSkypeHistory(file)
 	}
 
-	// For smaller files, read normally
-	data, err := readFileWithProgress(file, fileSize)
-	if err != nil {
-		return nil, fmt.Errorf("failed to read file: %w", err)
-	}
-
-	// Parse JSON
+	// Parse JSON directly from file to avoid extra in-memory copy of entire JSON payload.
 	fmt.Print("\nParsing JSON data...")
+	decoder := json.NewDecoder(file)
 	var history models.SkypeHistoryRoot
-	if err := json.Unmarshal(data, &history); err != nil {
+	if err := decoder.Decode(&history); err != nil {
 		return nil, fmt.Errorf("failed to parse JSON: %w", err)
 	}
 
-	// Display summary
 	fmt.Println(" Done!")
-	fmt.Println()
-	color.New(color.FgGreen, color.Bold).Println("✓ Successfully loaded Skype history")
-	fmt.Printf("  User ID: %s\n", history.UserId)
-	fmt.Printf("  Export Date: %s\n", history.ExportDate)
-	fmt.Printf("  Conversations: %d\n", len(history.Conversations))
-
-	totalMessages := 0
-	for _, conv := range history.Conversations {
-		totalMessages += len(conv.MessageList)
-	}
-	fmt.Printf("  Total Messages: %d\n", totalMessages)
-	fmt.Println()
-
+	printLoadSummary(&history)
 	return &history, nil
 }
 
@@ -122,8 +103,12 @@ func loadLargeSkypeHistory(file *os.File) (*models.SkypeHistoryRoot, error) {
 
 	done <- true
 
-	// Display summary
 	fmt.Println(" Done!")
+	printLoadSummary(&history)
+	return &history, nil
+}
+
+func printLoadSummary(history *models.SkypeHistoryRoot) {
 	fmt.Println()
 	color.New(color.FgGreen, color.Bold).Println("✓ Successfully loaded Skype history")
 	fmt.Printf("  User ID: %s\n", history.UserId)
@@ -136,47 +121,6 @@ func loadLargeSkypeHistory(file *os.File) (*models.SkypeHistoryRoot, error) {
 	}
 	fmt.Printf("  Total Messages: %d\n", totalMessages)
 	fmt.Println()
-
-	return &history, nil
-}
-
-// readFileWithProgress reads a file and shows progress
-func readFileWithProgress(file *os.File, totalSize int64) ([]byte, error) {
-	// Use chunked reading for better memory efficiency
-	chunkSize := int64(1024 * 1024) // 1MB chunks
-	if chunkSize > totalSize {
-		chunkSize = totalSize
-	}
-
-	var result []byte
-	buffer := make([]byte, chunkSize)
-	bytesRead := int64(0)
-	lastUpdate := time.Now()
-
-	for {
-		n, err := file.Read(buffer)
-		if n > 0 {
-			result = append(result, buffer[:n]...)
-			bytesRead += int64(n)
-		}
-
-		// Update progress every 100ms
-		if time.Since(lastUpdate) > 100*time.Millisecond || err == io.EOF {
-			percentage := float64(bytesRead) / float64(totalSize) * 100
-			fmt.Printf("\rReading file... %.1f%%", percentage)
-			lastUpdate = time.Now()
-		}
-
-		if err == io.EOF {
-			break
-		}
-		if err != nil {
-			return nil, err
-		}
-	}
-
-	fmt.Print("\r" + strings.Repeat(" ", 30) + "\r")
-	return result, nil
 }
 
 // ExportConversation exports a conversation to JSON
