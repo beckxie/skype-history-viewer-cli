@@ -158,26 +158,21 @@ func viewConversationWithLineNavigation(conv *models.SkypeConversation, v *viewe
 		v.DisplayConversation(conv, page)
 
 		// Get navigation input
-		fmt.Print("\nNavigation (n=next, p=prev, [number]=page, q=quit): ")
+		fmt.Print("\nNavigation (n=next, p=prev, q=quit): ")
 		input, _ := reader.ReadString('\n')
 		input = strings.TrimSpace(strings.ToLower(input))
 
 		switch input {
 		case "q", "quit":
 			return nil
-		case "n", "next":
+		case "n":
 			page++
-		case "p", "prev":
+		case "p":
 			if page > 1 {
 				page--
 			}
 		default:
-			// Try to parse as page number
-			if num, err := strconv.Atoi(input); err == nil && num > 0 {
-				page = num
-			} else {
-				color.New(color.FgRed).Println("Invalid input. Please try again.")
-			}
+			color.New(color.FgRed).Println("Invalid input. Please use n, p, or q.")
 		}
 	}
 }
@@ -219,14 +214,6 @@ func viewConversationWithKeyNavigation(conv *models.SkypeConversation, v *viewer
 			if page > 1 {
 				page--
 			}
-		case "first":
-			if totalPages > 0 {
-				page = 1
-			}
-		case "last":
-			if totalPages > 0 {
-				page = totalPages
-			}
 		}
 	}
 }
@@ -248,7 +235,7 @@ func navigationPrompt(totalPages int) string {
 	if totalPages <= 1 {
 		return "\nNavigation (q to quit): "
 	}
-	return "\nNavigation (j/k or n/p, g/G, q): "
+	return "\nNavigation (n/p, q): "
 }
 
 func readNavigationAction(reader *bufio.Reader) (string, error) {
@@ -260,32 +247,10 @@ func readNavigationAction(reader *bufio.Reader) (string, error) {
 	switch key {
 	case 'q', 'Q', 3:
 		return "quit", nil
-	case 'n', 'j', ' ', 14:
+	case 'n', 'N':
 		return "next", nil
-	case 'p', 'k', 16:
+	case 'p', 'P':
 		return "prev", nil
-	case 'g':
-		return "first", nil
-	case 'G':
-		return "last", nil
-	case 27:
-		second, err := reader.ReadByte()
-		if err != nil {
-			return "", nil
-		}
-		if second != '[' {
-			return "", nil
-		}
-		third, err := reader.ReadByte()
-		if err != nil {
-			return "", nil
-		}
-		switch third {
-		case 'A':
-			return "prev", nil
-		case 'B':
-			return "next", nil
-		}
 	case '\r', '\n':
 		return "", nil
 	}

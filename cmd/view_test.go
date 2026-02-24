@@ -17,12 +17,10 @@ func TestReadNavigationAction(t *testing.T) {
 		want  string
 	}{
 		{name: "next n", input: []byte{'n'}, want: "next"},
+		{name: "next N", input: []byte{'N'}, want: "next"},
 		{name: "prev p", input: []byte{'p'}, want: "prev"},
-		{name: "first g", input: []byte{'g'}, want: "first"},
-		{name: "last G", input: []byte{'G'}, want: "last"},
+		{name: "prev P", input: []byte{'P'}, want: "prev"},
 		{name: "quit q", input: []byte{'q'}, want: "quit"},
-		{name: "arrow up", input: []byte{27, '[', 'A'}, want: "prev"},
-		{name: "arrow down", input: []byte{27, '[', 'B'}, want: "next"},
 		{name: "unknown", input: []byte{'x'}, want: ""},
 	}
 
@@ -80,7 +78,7 @@ func TestNavigationPrompt(t *testing.T) {
 	if got := navigationPrompt(1); got != "\nNavigation (q to quit): " {
 		t.Fatalf("navigationPrompt(1) = %q", got)
 	}
-	if got := navigationPrompt(2); got != "\nNavigation (j/k or n/p, g/G, q): " {
+	if got := navigationPrompt(2); got != "\nNavigation (n/p, q): " {
 		t.Fatalf("navigationPrompt(2) = %q", got)
 	}
 }
