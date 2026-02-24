@@ -3,6 +3,7 @@ package search
 import (
 	"context"
 	"fmt"
+	"strings"
 	"testing"
 	"time"
 
@@ -165,6 +166,73 @@ func TestSearchManager_CacheLimit(t *testing.T) {
 	defer sm.cacheMutex.RUnlock()
 	if len(sm.searchCache) > 101 { // Actually it clears when > 100, so it might be small
 		// OK
+	}
+}
+
+func TestSearchManager_SearchCacheHonorsLimit(t *testing.T) {
+	history := &models.SkypeHistoryRoot{
+		Conversations: []models.SkypeConversation{
+			{
+				MessageList: []models.SkypeMessage{
+					{Content: "apple 1", MessageType: "Text", Timestamp: "2024-01-01T10:00:00Z"},
+					{Content: "apple 2", MessageType: "Text", Timestamp: "2024-01-01T10:01:00Z"},
+					{Content: "apple 3", MessageType: "Text", Timestamp: "2024-01-01T10:02:00Z"},
+				},
+			},
+		},
+	}
+
+	sm := NewSearchManager(history)
+	first, err := sm.Search(context.Background(), SearchOptions{
+		Query:           "apple",
+		SearchInContent: true,
+		Limit:           1,
+	})
+	if err != nil {
+		t.Fatalf("unexpected error in first search: %v", err)
+	}
+	if len(first) != 1 {
+		t.Fatalf("expected first search to return 1 result, got %d", len(first))
+	}
+
+	second, err := sm.Search(context.Background(), SearchOptions{
+		Query:           "apple",
+		SearchInContent: true,
+		Limit:           3,
+	})
+	if err != nil {
+		t.Fatalf("unexpected error in second search: %v", err)
+	}
+	if len(second) != 3 {
+		t.Fatalf("expected second search to return 3 results, got %d", len(second))
+	}
+}
+
+func TestSearchManager_PreservesContextCasing(t *testing.T) {
+	history := &models.SkypeHistoryRoot{
+		Conversations: []models.SkypeConversation{
+			{
+				MessageList: []models.SkypeMessage{
+					{Content: "Apple Pie", MessageType: "Text", Timestamp: "2024-01-01T10:00:00Z"},
+				},
+			},
+		},
+	}
+
+	sm := NewSearchManager(history)
+	results, err := sm.Search(context.Background(), SearchOptions{
+		Query:           "apple",
+		SearchInContent: true,
+		CaseSensitive:   false,
+	})
+	if err != nil {
+		t.Fatalf("unexpected error: %v", err)
+	}
+	if len(results) != 1 {
+		t.Fatalf("expected 1 result, got %d", len(results))
+	}
+	if !strings.Contains(results[0].MatchContext, "Apple") {
+		t.Fatalf("expected context to preserve original casing, got: %q", results[0].MatchContext)
 	}
 }
 

@@ -14,10 +14,9 @@ import (
 
 // SearchManager handles searching through Skype history
 type SearchManager struct {
-	history        *models.SkypeHistoryRoot
-	searchCache    map[string][]viewer.SearchResult
-	cacheMutex     sync.RWMutex
-	lastSearchTime time.Time
+	history     *models.SkypeHistoryRoot
+	searchCache map[string][]viewer.SearchResult
+	cacheMutex  sync.RWMutex
 }
 
 // NewSearchManager creates a new search manager
@@ -155,14 +154,15 @@ func (sm *SearchManager) checkMatch(msg *models.SkypeMessage, options SearchOpti
 	// Search in content
 	if options.SearchInContent {
 		content := msg.GetDisplayText()
+		contentToSearch := content
 		if !options.CaseSensitive {
-			content = strings.ToLower(content)
+			contentToSearch = strings.ToLower(contentToSearch)
 		}
 
-		if strings.Contains(content, query) {
+		if strings.Contains(contentToSearch, query) {
 			contentMatch = true
 			// Extract context around match
-			matchContext = sm.extractContext(content, query, 50)
+			matchContext = sm.extractContext(content, options.Query, options.CaseSensitive, 50)
 		}
 	}
 
@@ -200,8 +200,15 @@ func (sm *SearchManager) checkMatch(msg *models.SkypeMessage, options SearchOpti
 }
 
 // extractContext extracts text around the match
-func (sm *SearchManager) extractContext(text, query string, contextSize int) string {
-	index := strings.Index(strings.ToLower(text), strings.ToLower(query))
+func (sm *SearchManager) extractContext(text, query string, caseSensitive bool, contextSize int) string {
+	searchText := text
+	searchQuery := query
+	if !caseSensitive {
+		searchText = strings.ToLower(searchText)
+		searchQuery = strings.ToLower(searchQuery)
+	}
+
+	index := strings.Index(searchText, searchQuery)
 	if index == -1 {
 		return ""
 	}
@@ -226,12 +233,14 @@ func (sm *SearchManager) extractContext(text, query string, contextSize int) str
 		context = context + "..."
 	}
 
-	// Highlight match
-	highlighted := strings.ReplaceAll(
-		context,
-		text[index:index+len(query)],
-		color.New(color.FgYellow, color.Bold).Sprint(text[index:index+len(query)]),
-	)
+	matchStart := index - start
+	matchEnd := matchStart + len(query)
+	if matchStart < 0 || matchEnd > len(context) {
+		return context
+	}
+	highlighted := context[:matchStart] +
+		color.New(color.FgYellow, color.Bold).Sprint(context[matchStart:matchEnd]) +
+		context[matchEnd:]
 
 	return highlighted
 }
@@ -243,7 +252,9 @@ func (sm *SearchManager) buildCacheKey(options SearchOptions) string {
 		fmt.Sprintf("%v", options.SearchInContent),
 		fmt.Sprintf("%v", options.SearchInSender),
 		fmt.Sprintf("%v", options.CaseSensitive),
+		fmt.Sprintf("%v", options.RegexSearch),
 		options.ConversationFilter,
+		fmt.Sprintf("%d", options.Limit),
 	}
 
 	if options.DateFrom != nil {
