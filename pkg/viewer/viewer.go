@@ -162,7 +162,7 @@ func (v *MessageViewer) DisplayConversation(conv *models.SkypeConversation, page
 	// Display navigation help
 	if totalPages > 1 {
 		fmt.Println()
-		color.New(color.FgGreen).Println("Navigation: Use 'next'/'prev' commands or specify page number")
+		color.New(color.FgGreen).Println("Navigation: Use n/p to switch pages, q to quit")
 	}
 }
 
