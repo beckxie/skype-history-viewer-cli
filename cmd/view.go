@@ -184,12 +184,6 @@ func viewConversationWithLineNavigation(conv *models.SkypeConversation, v *viewe
 
 func viewConversationWithKeyNavigation(conv *models.SkypeConversation, v *viewer.MessageViewer, options viewer.ViewerOptions) error {
 	fd := int(os.Stdin.Fd())
-	oldState, err := term.MakeRaw(fd)
-	if err != nil {
-		return err
-	}
-	defer term.Restore(fd, oldState)
-
 	reader := bufio.NewReader(os.Stdin)
 	page := 1
 
@@ -208,7 +202,7 @@ func viewConversationWithKeyNavigation(conv *models.SkypeConversation, v *viewer
 		v.DisplayConversation(conv, page)
 		fmt.Print(navigationPrompt(totalPages))
 
-		action, err := readNavigationAction(reader)
+		action, err := readNavigationActionRaw(fd, reader)
 		fmt.Println()
 		if err != nil {
 			return err
@@ -235,6 +229,15 @@ func viewConversationWithKeyNavigation(conv *models.SkypeConversation, v *viewer
 			}
 		}
 	}
+}
+
+func readNavigationActionRaw(fd int, reader *bufio.Reader) (string, error) {
+	oldState, err := term.MakeRaw(fd)
+	if err != nil {
+		return "", err
+	}
+	defer term.Restore(fd, oldState)
+	return readNavigationAction(reader)
 }
 
 func clearTerminalScreen() {
