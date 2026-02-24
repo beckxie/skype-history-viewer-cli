@@ -27,7 +27,7 @@
 ```bash
 git clone https://github.com/beckxie/skype-history-viewer-cli.git
 cd skype-history-viewer-cli
-go build -o skype-viewer
+go build -o skype-history-viewer-cli
 ```
 
 ### 使用 Go Install
@@ -42,22 +42,22 @@ go install github.com/beckxie/skype-history-viewer-cli@latest
 
 ```bash
 # 顯示說明
-skype-viewer --help
+skype-history-viewer-cli --help
 
 # 列出所有對話
-skype-viewer list -f /path/to/messages.json
+skype-history-viewer-cli list -f /path/to/messages.json
 
 # 查看特定對話
-skype-viewer view 1 -f /path/to/messages.json
+skype-history-viewer-cli view 1 -f /path/to/messages.json
 
 # 搜尋訊息
-skype-viewer search -q "搜尋關鍵字" -f /path/to/messages.json
+skype-history-viewer-cli search -q "搜尋關鍵字" -f /path/to/messages.json
 
 # 顯示統計資訊
-skype-viewer stats -f /path/to/messages.json
+skype-history-viewer-cli stats -f /path/to/messages.json
 
 # 匯出對話
-skype-viewer export 1 -f /path/to/messages.json -o output.json
+skype-history-viewer-cli export 1 -f /path/to/messages.json -o output.json
 ```
 
 ### 命令說明
@@ -65,7 +65,7 @@ skype-viewer export 1 -f /path/to/messages.json -o output.json
 #### `list` - 列出所有對話
 
 ```bash
-skype-viewer list -f messages.json [flags]
+skype-history-viewer-cli list -f messages.json [flags]
 
 Flags:
   --show-system    包含系統訊息在計數中
@@ -74,7 +74,7 @@ Flags:
 #### `view` - 查看對話訊息
 
 ```bash
-skype-viewer view [對話編號] -f messages.json [flags]
+skype-history-viewer-cli view [對話編號] -f messages.json [flags]
 
 Flags:
   --page-size int       每頁顯示的訊息數量 (預設 20)
@@ -87,7 +87,7 @@ Flags:
 #### `search` - 搜尋訊息
 
 ```bash
-skype-viewer search -q "查詢內容" -f messages.json [flags]
+skype-history-viewer-cli search -q "查詢內容" -f messages.json [flags]
 
 Flags:
   -q, --query string         搜尋查詢文字 (必要)
@@ -103,7 +103,7 @@ Flags:
 #### `export` - 匯出對話
 
 ```bash
-skype-viewer export [對話編號] -f messages.json [flags]
+skype-history-viewer-cli export [對話編號] -f messages.json [flags]
 
 Flags:
   -o, --output string    輸出檔案路徑 (預設: 自動產生)
@@ -112,13 +112,13 @@ Flags:
 #### `stats` - 顯示統計資訊
 
 ```bash
-skype-viewer stats -f messages.json
+skype-history-viewer-cli stats -f messages.json
 ```
 
 #### `convert` - 轉換舊版匯出格式
 
 ```bash
-skype-viewer convert [舊版匯出檔案]
+skype-history-viewer-cli convert [舊版匯出檔案]
 ```
 
 將舊格式的 JSON 檔案轉換為可被所有命令讀取的新格式。
@@ -144,26 +144,26 @@ skype-viewer convert [舊版匯出檔案]
 ### 搜尋特定人員的訊息
 
 ```bash
-skype-viewer search -q "John" --sender -f messages.json
+skype-history-viewer-cli search -q "John" --sender -f messages.json
 ```
 
 ### 使用日期篩選查看對話
 
 ```bash
-skype-viewer view 1 -f messages.json --date-from 2024-01-01 --date-to 2024-12-31
+skype-history-viewer-cli view 1 -f messages.json --date-from 2024-01-01 --date-to 2024-12-31
 ```
 
 ### 使用自訂輸出匯出對話
 
 ```bash
-skype-viewer export 5 -f messages.json -o "john_doe_chat.json"
+skype-history-viewer-cli export 5 -f messages.json -o "john_doe_chat.json"
 ```
 
 ### 互動式對話檢視
 
 ```bash
 # 不指定對話編號時，進入互動模式
-skype-viewer view -f messages.json
+skype-history-viewer-cli view -f messages.json
 ```
 
 ## 詳細功能
