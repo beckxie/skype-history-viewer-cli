@@ -87,10 +87,8 @@ Flags:
 
 Interactive controls (TTY mode):
 
-- `j` / `n` / Down Arrow: next page
-- `k` / `p` / Up Arrow: previous page
-- `g`: first page
-- `G`: last page
+- `n`: next page
+- `p`: previous page
 - `q`: quit viewer
 
 In non-TTY environments, the viewer automatically falls back to line-based input.
