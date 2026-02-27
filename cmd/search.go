@@ -15,6 +15,7 @@ var (
 	searchInContent    bool
 	searchInSender     bool
 	caseSensitive      bool
+	regexSearch        bool
 	conversationFilter string
 	searchLimit        int
 	searchDateFrom     string
@@ -69,6 +70,7 @@ var searchCmd = &cobra.Command{
 			SearchInContent:    searchInContent,
 			SearchInSender:     searchInSender,
 			CaseSensitive:      caseSensitive,
+			RegexSearch:        regexSearch,
 			ConversationFilter: conversationFilter,
 			DateFrom:           dateFromTime,
 			DateTo:             dateToTime,
@@ -103,6 +105,7 @@ func init() {
 	searchCmd.Flags().BoolVar(&searchInContent, "content", true, "Search in message content")
 	searchCmd.Flags().BoolVar(&searchInSender, "sender", true, "Search in sender names")
 	searchCmd.Flags().BoolVar(&caseSensitive, "case-sensitive", false, "Case-sensitive search")
+	searchCmd.Flags().BoolVar(&regexSearch, "regex", false, "Treat query as a regular expression")
 	searchCmd.Flags().StringVar(&conversationFilter, "conversation", "", "Filter by conversation name")
 	searchCmd.Flags().IntVar(&searchLimit, "limit", 50, "Maximum number of results (0 for unlimited)")
 	searchCmd.Flags().StringVar(&searchDateFrom, "date-from", "", "Search from this date (YYYY-MM-DD)")

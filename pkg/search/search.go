@@ -3,6 +3,7 @@ package search
 import (
 	"context"
 	"fmt"
+	"regexp"
 	"strings"
 	"sync"
 	"time"
@@ -40,6 +41,11 @@ type SearchOptions struct {
 	Limit              int
 }
 
+type compiledSearchPattern struct {
+	content *regexp.Regexp
+	sender  *regexp.Regexp
+}
+
 // Search performs a search across all conversations
 func (sm *SearchManager) Search(ctx context.Context, options SearchOptions) ([]viewer.SearchResult, error) {
 	// Check cache
@@ -55,6 +61,11 @@ func (sm *SearchManager) Search(ctx context.Context, options SearchOptions) ([]v
 	results := []viewer.SearchResult{}
 	totalMessages := 0
 	searchedMessages := 0
+
+	pattern, err := sm.compileSearchPattern(options)
+	if err != nil {
+		return nil, err
+	}
 
 	// Count total messages for progress
 	for _, conv := range sm.history.Conversations {
@@ -117,7 +128,7 @@ func (sm *SearchManager) Search(ctx context.Context, options SearchOptions) ([]v
 			}
 
 			// Check for match
-			matchResult := sm.checkMatch(&msg, options)
+			matchResult := sm.checkMatch(&msg, options, pattern)
 			if matchResult != nil {
 				matchResult.ConversationName = conv.GetConversationDisplayName()
 				results = append(results, *matchResult)
@@ -141,7 +152,7 @@ func (sm *SearchManager) Search(ctx context.Context, options SearchOptions) ([]v
 }
 
 // checkMatch checks if a message matches search criteria
-func (sm *SearchManager) checkMatch(msg *models.SkypeMessage, options SearchOptions) *viewer.SearchResult {
+func (sm *SearchManager) checkMatch(msg *models.SkypeMessage, options SearchOptions, pattern *compiledSearchPattern) *viewer.SearchResult {
 	query := options.Query
 	if !options.CaseSensitive {
 		query = strings.ToLower(query)
@@ -159,10 +170,10 @@ func (sm *SearchManager) checkMatch(msg *models.SkypeMessage, options SearchOpti
 			contentToSearch = strings.ToLower(contentToSearch)
 		}
 
-		if strings.Contains(contentToSearch, query) {
+		if sm.matchesContent(contentToSearch, query, options, pattern) {
 			contentMatch = true
 			// Extract context around match
-			matchContext = sm.extractContext(content, options.Query, options.CaseSensitive, 50)
+			matchContext = sm.extractContext(content, options, pattern, 50)
 		}
 	}
 
@@ -173,7 +184,7 @@ func (sm *SearchManager) checkMatch(msg *models.SkypeMessage, options SearchOpti
 			sender = strings.ToLower(sender)
 		}
 
-		if strings.Contains(sender, query) {
+		if sm.matchesSender(sender, query, options, pattern) {
 			senderMatch = true
 		}
 	}
@@ -199,16 +210,60 @@ func (sm *SearchManager) checkMatch(msg *models.SkypeMessage, options SearchOpti
 	return nil
 }
 
+func (sm *SearchManager) compileSearchPattern(options SearchOptions) (*compiledSearchPattern, error) {
+	if !options.RegexSearch {
+		return nil, nil
+	}
+
+	prefix := ""
+	if !options.CaseSensitive {
+		prefix = "(?i)"
+	}
+
+	compiled, err := regexp.Compile(prefix + options.Query)
+	if err != nil {
+		return nil, fmt.Errorf("invalid regex query: %w", err)
+	}
+
+	return &compiledSearchPattern{content: compiled, sender: compiled}, nil
+}
+
+func (sm *SearchManager) matchesContent(contentToSearch, query string, options SearchOptions, pattern *compiledSearchPattern) bool {
+	if options.RegexSearch {
+		return pattern != nil && pattern.content != nil && pattern.content.MatchString(contentToSearch)
+	}
+
+	return strings.Contains(contentToSearch, query)
+}
+
+func (sm *SearchManager) matchesSender(sender, query string, options SearchOptions, pattern *compiledSearchPattern) bool {
+	if options.RegexSearch {
+		return pattern != nil && pattern.sender != nil && pattern.sender.MatchString(sender)
+	}
+
+	return strings.Contains(sender, query)
+}
+
 // extractContext extracts text around the match
-func (sm *SearchManager) extractContext(text, query string, caseSensitive bool, contextSize int) string {
+func (sm *SearchManager) extractContext(text string, options SearchOptions, pattern *compiledSearchPattern, contextSize int) string {
 	searchText := text
-	searchQuery := query
-	if !caseSensitive {
+	searchQuery := options.Query
+	if !options.CaseSensitive {
 		searchText = strings.ToLower(searchText)
 		searchQuery = strings.ToLower(searchQuery)
 	}
 
 	index := strings.Index(searchText, searchQuery)
+	matchLength := len(options.Query)
+	if options.RegexSearch && pattern != nil && pattern.content != nil {
+		loc := pattern.content.FindStringIndex(text)
+		if loc == nil {
+			return ""
+		}
+		index = loc[0]
+		matchLength = loc[1] - loc[0]
+	}
+
 	if index == -1 {
 		return ""
 	}
@@ -218,7 +273,7 @@ func (sm *SearchManager) extractContext(text, query string, caseSensitive bool, 
 		start = 0
 	}
 
-	end := index + len(query) + contextSize
+	end := index + matchLength + contextSize
 	if end > len(text) {
 		end = len(text)
 	}
@@ -234,7 +289,7 @@ func (sm *SearchManager) extractContext(text, query string, caseSensitive bool, 
 	}
 
 	matchStart := index - start
-	matchEnd := matchStart + len(query)
+	matchEnd := matchStart + matchLength
 	if matchStart < 0 || matchEnd > len(context) {
 		return context
 	}
