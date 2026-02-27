@@ -236,6 +236,52 @@ func TestSearchManager_PreservesContextCasing(t *testing.T) {
 	}
 }
 
+func TestSearchManager_RegexSearch(t *testing.T) {
+	history := &models.SkypeHistoryRoot{
+		Conversations: []models.SkypeConversation{
+			{
+				MessageList: []models.SkypeMessage{
+					{Content: "Order #1234 completed", MessageType: "Text", Timestamp: "2024-01-01T10:00:00Z", From: "bot-01"},
+					{Content: "Order #987 shipped", MessageType: "Text", Timestamp: "2024-01-01T10:01:00Z", From: "bot-02"},
+					{Content: "No order here", MessageType: "Text", Timestamp: "2024-01-01T10:02:00Z", From: "user"},
+				},
+			},
+		},
+	}
+
+	sm := NewSearchManager(history)
+
+	results, err := sm.Search(context.Background(), SearchOptions{
+		Query:           `Order #[0-9]{3,4}`,
+		SearchInContent: true,
+		RegexSearch:     true,
+	})
+	if err != nil {
+		t.Fatalf("unexpected regex search error: %v", err)
+	}
+	if len(results) != 2 {
+		t.Fatalf("expected 2 regex matches, got %d", len(results))
+	}
+
+	if results[0].MatchContext == "" {
+		t.Fatalf("expected non-empty regex match context")
+	}
+}
+
+func TestSearchManager_RegexSearch_InvalidPattern(t *testing.T) {
+	history := &models.SkypeHistoryRoot{}
+	sm := NewSearchManager(history)
+
+	_, err := sm.Search(context.Background(), SearchOptions{
+		Query:           `([a-z`,
+		SearchInContent: true,
+		RegexSearch:     true,
+	})
+	if err == nil {
+		t.Fatal("expected invalid regex error, got nil")
+	}
+}
+
 func stringPtr(s string) *string {
 	return &s
 }
